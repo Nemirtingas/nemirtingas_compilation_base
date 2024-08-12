@@ -6,7 +6,7 @@ ENV LLVM_VER  ${CLANG_VER}
 RUN export DEBIAN_FRONTEND=noninteractive &&\
     dpkg --add-architecture i386 &&\
     apt-get update &&\
-    apt-get -y install lsb-release python3 python3-pip git wget zip unzip pkg-config curl ninja-build software-properties-common gnupg &&\
+    apt-get -y install lsb-release python3 python3-pip git wget zip unzip pkg-config curl ninja-build software-properties-common gnupg file &&\
     wget https://apt.llvm.org/llvm.sh &&\
     chmod +x llvm.sh &&\
     ./llvm.sh "${CLANG_VER}" &&\
