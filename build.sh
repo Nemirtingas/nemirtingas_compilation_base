@@ -24,10 +24,11 @@ function build_image()
     docker run "--name=${container_name}" ${NAME}:${VERSION} /bin/bash -c exit &&
     docker commit -m "${NAME} image built on ubuntu${UBUNTU_VER} with ${VERSION} and clang ${CLANG_VER}" -a "Nemirtingas" "${container_name}" nemirtingas/${NAME}:${VERSION} &&
     docker push nemirtingas/${NAME}:${VERSION} &&
+    docker pull nemirtingas/${NAME}:${VERSION} &&
     docker rm "${container_name}"
-
-    cleanup
 }
 
 trap cleanup INT
-build_image "nemirtingas_compilation_base" "22.04" "17"
+#build_image "nemirtingas_compilation_base" "22.04" "17"
+#build_image "nemirtingas_compilation_base" "22.04" "18"
+build_image "nemirtingas_compilation_base" "22.04" "20"
