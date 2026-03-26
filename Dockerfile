@@ -6,14 +6,14 @@ RUN export DEBIAN_FRONTEND=noninteractive &&\
     apt-get update &&\
     apt-get -y install lsb-release python3 python3-pip git git-lfs wget zip unzip pkg-config curl ninja-build software-properties-common gnupg file &&\
     wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key |  tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc &&\
-    add-apt-repository -y 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-22 main' &&\
     wget https://apt.llvm.org/llvm.sh &&\
     chmod +x llvm.sh &&\
     ./llvm.sh 22 &&\
     apt-get -y install ninja-build build-essential pkg-config clang clang-tools llvm lld &&\
-    apt-get purge llvm-dev -y &&\
+    apt-get purge llvm-dev llvm-18* clang-18* -y &&\
     apt-get autoremove -y &&\
     apt-get clean &&\
+    cd /usr/bin && for tool in clang*-${CLANG_VER} ll*-${CLANG_VER} dsymutil-${CLANG_VER}; do ln -s /usr/bin/${tool} /usr/bin/${tool%-${CLANG_VER}}; done && cd / &&\
     rm -f llvm.sh
 RUN cd / &&\
     git clone --depth 1 -b my_crosscompile https://github.com/Nemirtingas/vcpkg.git vcpkg &&\
